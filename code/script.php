@@ -56,7 +56,8 @@ $alerts = getAlerts($data);
     <meta http-equiv="refresh" content="10">
 </head>
 <body>
-    <h1>Données capteurs</h1>
+    <h1>Webhook</h1>
+    <h2>Données capteurs</h2>
 
     <p>Température: <?= $data['temp1']?> °C</p>
     <p>Humidité: <?= $data['humidity']?> %</p>
@@ -70,5 +71,6 @@ $alerts = getAlerts($data);
             <?php endforeach; ?>
         </ul>
     <?php endif; ?>
+    
 </body>
 </html>
