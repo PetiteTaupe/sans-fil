@@ -28,3 +28,20 @@ Dans l'onglet "Messaging", puis la section "Simulated uplink" de la dashboard, n
 ![Exemple de simulation d'uplink](img/3.png)
 
 Ensuite, nous pouvons vérifier dans l'onglet "Live data" que nous recevons bien un message, comme s'il provenait du capteur.
+
+### Test et optimisation d’un décodeur JavaScript TTN
+Nous avons ensuite mis en place un décodeur afin de "décrypter" les messages en hexadécimal. Nous sommes repartis de l'exemple fourni:
+
+https://gitlab-etu.ing.he-arc.ch/isc/2025-26/niveau-2/2254-2-reseaux-et-application/-/blob/main/03_Sans-fil/code/payload-decode.js?ref_type=heads
+
+Avec cette base, les messages en hexadécimal deviennent un format JSON qui nous retourne des informations sur la batterie:
+
+![Résultats du décodeur de base](img/4base.png)
+
+Puis nous l'avons complété en suivant le commentaire en haut du code.
+
+Lien vers le code complet: [code/payload-decode.js](code/payload-decode.js)
+
+Avec le décodeur complété nous pouvons maintenant voir en plus les informations du capteur (humidité et température):
+
+![Résultats du décodeur complété](img/4complete.png)
