@@ -4,7 +4,7 @@ https://gitlab-etu.ing.he-arc.ch/isc/documentation/docs/-/wikis/recommandations-
 à faire a la fin
 ## Manipulations et observations
 ### Visualisation TTN et identification des gateways LoRaWAN
-Aprés l'authentification sur le site TTN, nous somme arrivés sur le dashboard de notre capteur LoRaWAN. Nous avons sélectionné l'onglet "Live data" de la dashboard, puis appuyer sur le bouton du capteur afin de visualiser notre première donnée transmise.
+Après l'authentification sur le site TTN, nous somme arrivés sur le dashboard de notre capteur LoRaWAN. Nous avons sélectionné l'onglet "Live data" de la dashboard, puis appuyé sur le bouton du capteur afin de visualiser notre première donnée transmise.
 
 ![Première donnée transmise](img/2.png)
 
@@ -22,4 +22,9 @@ Dans notre cas, nous pouvons lire que notre message passe par un gateway de la H
 
 ### Test de simulation des données
 
+Dans l'onglet "Messaging", puis la section "Simulated uplink" de la dashboard, nous pouvons simuler un message qui pourrait être envoyé par le capteur. C'est pratique quand l'appareil physique n'est pas  à porté de main.
 
+
+![Exemple de simulation d'uplink](img/3.png)
+
+Ensuite, nous pouvons vérifier dans l'onglet "Live data" que nous recevons bien un message, comme s'il provenait du capteur.
