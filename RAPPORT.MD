@@ -4,7 +4,7 @@ https://gitlab-etu.ing.he-arc.ch/isc/documentation/docs/-/wikis/recommandations-
 à faire a la fin
 ## Manipulations et observations
 ### Visualisation TTN et identification des gateways LoRaWAN
-Après l'authentification sur le site TTN, nous somme arrivés sur le dashboard de notre capteur LoRaWAN. Nous avons sélectionné l'onglet "Live data" de la dashboard, puis appuyé sur le bouton du capteur afin de visualiser notre première donnée transmise.
+Après l'authentification sur le site TTN, nous sommes arrivés sur le dashboard de notre capteur LoRaWAN. Nous avons sélectionné l'onglet "Live data" du dashboard, puis appuyé sur le bouton du capteur afin de visualiser notre première donnée transmise.
 
 ![Première donnée transmise](img/2.png)
 
@@ -22,7 +22,7 @@ Dans notre cas, nous pouvons lire que notre message passe par un gateway de la H
 
 ### Test de simulation des données
 
-Dans l'onglet "Messaging", puis la section "Simulated uplink" de la dashboard, nous pouvons simuler un message qui pourrait être envoyé par le capteur. C'est pratique quand l'appareil physique n'est pas  à portée de main.
+Dans l'onglet "Messaging", puis la section "Simulated uplink" du dashboard, nous pouvons simuler un message qui pourrait être envoyé par le capteur. C'est pratique quand l'appareil physique n'est pas  à portée de main.
 
 
 ![Exemple de simulation d'uplink](img/3.png)
@@ -83,5 +83,41 @@ Maintenant, les données deviennent interprétables et peuvent être lues au for
 
 ![Test webhook with payload formatter](img/6withpayloadformatter.png)
 
+### Affichage des données
 
+Après la mise en place du webhook et du déploiement du script PHP sur le conteneur, nous avons mis en place l’affichage des données reçues.
 
+Le script récupère les messages envoyés par TTN via une requête HTTP POST. Les données sont extraites depuis le payload JSON et stockées dans un fichier local afin de conserver la dernière valeur reçue.
+
+Ces informations sont ensuite affichées sur une page web générée en PHP. Les valeurs de température, d’humidité et de batterie sont directement visibles dans le navigateur.
+
+![Affichage des données](img/7.png)
+
+La page se met à jour automatiquement toutes les 10 secondes afin de permettre un suivi quasi temps réel des données du capteur.
+
+### Gestion des alertes
+En complément de l'affichage des données brutes, nous avons ajouté un système d’alertes afin d’interpréter les valeurs reçues et détecter des situations anormales.
+
+Le script PHP récupère les données capteurs (température, humidité et tension de batterie) et les compare à des seuils définis. Si une valeur sort de la plage considérée comme normale, une alerte correspondante est générée.
+
+![Gestion des alertes](img/8.png)
+
+Les alertes générées sont ensuite affichées dynamiquement sur la page web sous forme de liste. Cela permet une lecture rapide de l’état du système sans analyser directement les valeurs numériques.
+
+### Webhook JSON vs Protocol Buffers
+Afin d'obtenir des logs exploitables, nous sommes revenus au script PHP de base et avons désactivé le payload formatter.
+
+Nous avons ensuite simulé un uplink depuis TTN afin d’observer la requête POST reçue par notre serveur. Dans un premier temps, nous avons utilisé le format JSON (format par défaut), puis nous avons testé le format Protocol Buffers.
+
+![TTN changer le format du Webhook](img/9jsontopb.png)
+
+En format JSON, les données sont lisibles et structurées. Le payload est présent dans le champ frm_payload. Bien que ce contenu ne soit pas directement interprétable, il reste facilement décodable et exploitable.
+
+En revanche, en format Protocol Buffers, les données reçues apparaissent sous forme binaire. Elles ne sont pas lisibles dans le terminal et ne peuvent pas être traitées directement par le script PHP.
+
+![Terninal JSON vs Protocol Buffers](img/9compare.png)
+
+Nous en déduison que le format JSON est plus adapté dans notre cas, car il permet une manipulation simple des données, contrairement au format Protocol Buffers qui nécessite un décodage spécifique. Cependant, ce dernier est plus compact et optimisé pour la transmission, ce qui le rend plus efficace côté machine.
+
+# Conclusion
+conclure avec une conclusion
