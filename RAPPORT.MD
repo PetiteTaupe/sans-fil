@@ -22,7 +22,7 @@ Dans notre cas, nous pouvons lire que notre message passe par un gateway de la H
 
 ### Test de simulation des données
 
-Dans l'onglet "Messaging", puis la section "Simulated uplink" de la dashboard, nous pouvons simuler un message qui pourrait être envoyé par le capteur. C'est pratique quand l'appareil physique n'est pas  à porté de main.
+Dans l'onglet "Messaging", puis la section "Simulated uplink" de la dashboard, nous pouvons simuler un message qui pourrait être envoyé par le capteur. C'est pratique quand l'appareil physique n'est pas  à portée de main.
 
 
 ![Exemple de simulation d'uplink](img/3.png)
@@ -45,3 +45,43 @@ Lien vers le code complet: [code/payload-decode.js](code/payload-decode.js)
 Avec le décodeur complété nous pouvons maintenant voir en plus les informations du capteur (humidité et température):
 
 ![Résultats du décodeur complété](img/4complete.png)
+
+### Accès au conteneur ALPHANET-DS
+Après la connexion à la machine distante via SSH, nous avons mis à jour le système du conteneur, installé netcat et ouvert un serveur TCP sur le port 80 grâce à la commande `nc`.
+
+Ensuite, depuis un navigateur web, nous sommes allés sur l'adresse http://193.72.186.153:8087/script.php.
+Nous voyons bien que le serveur ouvert précédemment a bien reçu une requête GET avec les entêtes client (User-Agent, Host, Accept, etc).
+
+![Serveur TCP ouverture et réception](img/5.png)
+
+### Intégration Webhook HTTP dans ALPHANET-DS
+#### Installation de PHP et déploiement de l’application
+
+Nous avons installé PHP en mode standalone. Nous avons ensuite créé un répertoire `/html` afin d’héberger les fichiers de l’application. Nous avons ensuite lancé le serveur web intégré de PHP pour servir le contenu du répertoire courant
+
+`sudo php -S 0.0.0.0:80`
+
+Ce serveur minimal permet de tester rapidement une application.
+
+Un script PHP de base nous a été fourni, nous l'avons déployé sur le conteneur à l’aide d'une commande scp.
+
+Afin de simuler le comportement d'une future intégration avec TTN, nous avons testé notre script PHP en envoyant une requête HTTP POST.
+
+![Test serveur php minimal](img/6base.png)
+
+#### Intégration Webhook avec TTN
+
+Sur le site TTN, nous avons créé une nouvelle intégration webhook qui renseigne le lien de notre script PHP.
+
+En allant via un navigateur sur notre script, nous pouvons voir ce message dans notre serveur php, ce qui nous intéresse c'est le payload:
+
+![Test webhook without payload formatter](img/6withoutpayloadformatter.png)
+
+Le payload ci-dessus reçu n'était pas exploitable directement. Nous avions toutefois déjà effectué des tests avec un payload formatter. Nous l'avons activé.
+
+Maintenant, les données deviennent interprétables et peuvent être lues au format JSON.
+
+![Test webhook with payload formatter](img/6withpayloadformatter.png)
+
+
+
