@@ -1,5 +1,4 @@
 <?php
-/* with json
 $stderr = fopen('php://stderr', 'w');
 
 function getAlerts($data) {
@@ -75,6 +74,3 @@ $alerts = getAlerts($data);
     
 </body>
 </html>
-*/
-$stderr = fopen('php://stderr', 'w');
-fwrite($stderr, file_get_contents('php://input') . "\n");
