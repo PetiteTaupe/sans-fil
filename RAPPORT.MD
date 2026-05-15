@@ -135,9 +135,7 @@ Enfin, nous avons comparé les formats JSON et Protocol Buffers pour la transmis
 #### a) Est-ce normal ? Que se passe-t-il probablement ? Quel est le risque éventuel ?
 
 ##### Est-ce normal?
-Non.
-
-Un vrai bridge en couche 2 devrait relayer les trames mais conserver l'adresse MAC source originale de l'expéditeur.
+Non. Un vrai bridge en couche 2 devrait relayer les trames mais conserver l'adresse MAC source originale de l'expéditeur.
 
 ##### Que se passe-t-il probablement?
 
@@ -159,18 +157,19 @@ Cependant, tout fonctionne "normalement" car TCP/IP utilise les **adresses IP** 
 
 **Problèmes avec ARP**
 - Les tables ARP ne reflètent pas la topologie réelle
-- Une machine du LAN2 qui veut faire un ping à une machine du LAN1 doit passer par l'AP, pas directement. Il y a donc un risque d'**incohérence ARP** si les réponses ARP ne sont pas cohérentes avec le flux de données
+- Une machine du LAN2 qui veut faire un ping à une machine du LAN1 doit passer par l'AP, pas directement. Il y a donc un risque d'incohérence ARP si les réponses ARP ne sont pas cohérentes avec le flux de données
 
 **Problèmes de sécurité**
 - Certains filtres / politiques de sécurité ne s'exécuteraient pas, car on pourrait penser que tout vient du même AP à cause de l'adresse MAC identique
 
-### b) Consultation du format de trame 802.11, explication de comment les 4 adresses devraient être utilisées, si cette fonction bizarre n'était pas activée
+### b) Consultation du format de trame 802.11, explication de comment les 4 adresses devraient être utilisées, si cette fonction n'était pas activée
 
 Une trame 802.11 contient jusqu'à **4 champs d'adresse MAC**, dont l'utilisation dépend de deux flags :
 - **To DS** (To Distribution System) : 1 = la trame est destinée au système de distribution (AP)
 - **From DS** (From Distribution System) : 1 = la trame provient du système de distribution (AP)
 
 ![alt text](img/format_trame_802_11.jpg)
+*Format d'une trame 802.11 venant du support de cours "technologies-wifi"*
 
 #### Utilisation des 4 adresses selon To DS / From DS :
 
@@ -201,23 +200,17 @@ vT7!qZ@2Lm#8xR$4Pw9&Ks1^Nd6*Hy3+Uf0!Cb
 #### Exemple "parfait"
 Le meilleur cas serait d'utiliser des caractères hexadécimaux pour représenter une clé purement aléatoire de 256 bits. Chaque caractère représente 4 bits:
 
-$$64 * 4 = 256 bits$$
+$$64 * 4 = 256  bits$$
 
 On arrive à exactement 256 bits d'entropie.
 
 #### avancés : comment peut-on, si un mot de passe n’a pas une entropie suffisante, stretcher 10 la clé pour améliorer la situation
-* En utilisant une fonction de hash
-* 
-!! on applique des milliers/millions d’itérations,
-parfois avec coût mémoire élevé,
-pour dériver une clé AES à partir du mot de passe.
-
-Ralentit fortement les attaques par brute force car il augmente le coût de calcul pour l'attaquant.
+On peut appliquer des milliers/millions d’itérations, parfois avec coût mémoire élevé, pour dériver une clé AES à partir du mot de passe. Cela ralentit fortement les attaques par brute force car il augmente le coût de calcul pour l'attaquant.
 
 ### 3. qu’est-ce qu’un portail captif dans le contexte de la sécurisation d’un réseau sans-fil sans chiffrement ? y-a-t-il des problèmes avec cette stratégie ?
 C'est une page web d'authentification s'affichant automatiquement, imposant des conditions (connexion, acceptation des conditions) avant de pouvoir accéder à un réseau sans fil.
 
-Problème: le wifi reste non chiffré, même si une authentification est requise. Les trames peuvent être interceptées et un attaquant proche pourrait écouter le trafic.
+Cependant, un problème reste: le wifi reste non chiffré, même si une authentification est requise. Les trames peuvent être interceptées et un attaquant proche pourrait écouter le trafic.
 
 ### 4. faites un schéma couche 3 et couche 2 du pont WiFi dans la variante où les équipements réseau sont administrés dans un VLAN séparé, placez un PC d’administration et indiquez quels ports sont en trunk et quel port est en access
 
@@ -270,26 +263,31 @@ Désavantages:
 * Il faut gérer le DHCP, le routage, le firewall et le VLAN.
 
 ### 7. Problème: des trames se perdent 
-Alex se rend compte que parfois les communications voix-sur-IP sont mauvaises au sein de
-son réseau WiFi : la variance de délai est telle qu’il doit mettre de grand buffers dans les
-applications, ce qui rend la communication peu interactive. Il a pourtant mis en place du
-802.11n avec du 802.11e (ses AP sont "compatibles WMM"). En debuggant un peu plus, il
-se rend compte que parfois des trames se perdent.
 
-Que se passe-t-il et que faut-il faire ?
-
-802.11e garantit la QoS pour des données telles que la voix durant les appels par exemple.
-802.11n garantit le débit haut
+* 802.11e garantit la **QoS** pour des données telles que la voix durant les appels par exemple.
+* 802.11n garantit le **débit haut**.
 
 Problème possibles: 
 * Le QoS est priorisé et les paquets à priorité basse peuvent être mis en attente si un trafic prioritaire passe avant eux.
+* Le wifi est un réseau à accès concurrent. Il est possible que plusieurs stations se disputent le canal.
+* Il y a eu des retransmissions: Si une trame doit être retransmise, le délai devient imprévisible et les paquets arrivent de manière irrégulière. Il y a alors moins de coupures mais une forte latence est possible.
+* Le 802.11n peut empirer la situation : il améliore le débit global mais rend le comportement plus variable et peut amplifier les effets des interférences.
 
+### 8. Améliorer la sécurité d'un réseau de capteurs codés en 802.11 dont le chip wifi ne supporte pas le chiffrement en couche 2
+Soit un réseau de capteurs que vous avez codés, en 802.11. Vous remarquez, trop tard, que
+le chip WiFi embarqué ne supporte pas le chiffrement en couche 2 (ou alors du vieux WEP
+à 64 bits cassable en quelques secondes). Que pouvez-vous faire pour améliorer la sécurité ?
+Pourquoi ce n’est pas idéal dans ce cas ?
 
+* Chiffrer en couche applicative 
 
-802.11e: Enhance the current 802.11 MAC to expand support for LAN applications with Quality of Service requirements. Provide improvements in security, and in the capabilities and efficiency of the protocol.
-
-Improve the 802.11 wireless local area network (LAN) user experience by providing significantly higher throughput for current applications and to enable new applications and market segments.
-
+### 9. Listez les mesures à prendre pour sécuriser un réseau Wifi et classez-les de la meilleure à la moins utile.
+1. Chiffrement WPA/WPA2
+2. Utiliser un mot de passe de connexion fort
+3. Faire les mises à jour
+4. Séparation des réseaux avec des VLAN
+5. Désactiver WPS (pratique mais vulnérable) 
+6. Portail captif
 
 
 ## Annexes
