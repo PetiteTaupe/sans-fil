@@ -166,7 +166,7 @@ Une trame 802.11 contient jusqu'à **4 champs d'adresse MAC**, dont l'utilisatio
 - **To DS** (To Distribution System) : 1 = la trame est destinée au système de distribution (AP)
 - **From DS** (From Distribution System) : 1 = la trame provient du système de distribution (AP)
 
-blabla
+Format d'une trame 802.11:
 ![Format d'une trame 802.11 venant du support de cours "technologies-wifi](img/format_trame_802_11.jpg)
 
 #### Utilisation des 4 adresses selon To DS / From DS :
@@ -211,10 +211,11 @@ C'est une page web d'authentification s'affichant automatiquement, imposant des 
 Cependant, un problème reste: le wifi reste non chiffré, même si une authentification est requise. Les trames peuvent être interceptées et un attaquant proche pourrait écouter le trafic.
 
 ### 4. faites un schéma couche 3 et couche 2 du pont WiFi dans la variante où les équipements réseau sont administrés dans un VLAN séparé, placez un PC d’administration et indiquez quels ports sont en trunk et quel port est en access
-blabla
+
+Couche 2:
 ![Schéma en couche 2](img/schema_couche_2.jpg)
 
-blabla
+Couche 3:
 ![Schéma en couche 3](img/schema_couche_3.jpg)
 
 ### 5. avec deux antennes à gain 30 dB, quelle distance pourriez-vous atteindre ? quel serait le problème de cette liaison ?
