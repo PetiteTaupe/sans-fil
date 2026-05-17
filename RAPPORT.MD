@@ -316,6 +316,7 @@ Il manquera également des protections du Wifi moderne (WPA2/3 fournissent de l'
 [payload-decode.js](code/payload-decode.js)
 
 [script.php](code/script.php)
+
 [VLAN ids et configurations trunk](https://jumpcloud.com/it-index/what-is-vlan-id)
 
 
@@ -326,4 +327,5 @@ Il manquera également des protections du Wifi moderne (WPA2/3 fournissent de l'
 
 ## Sources
 [802.11n et 802.11e definitions](https://wlanprofessionals.com/the-abcs-of-802-11/)
+
 [Portail captif définition](https://www.passman-group.com/fr/portail-captif-securisez-vos-connexions/)
