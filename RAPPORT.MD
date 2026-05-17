@@ -242,7 +242,7 @@ Si on suppose :
 * Wi-Fi 5 GHz,
 * puissance émission = 20 dBm,
 * antennes = 30 dBi chacune,
-* sensibilité réception = env. −75 dBm.
+* sensibilité réception = env. -75 dBm.
 
 Si on a 30 dB de gains, on arrive à 80 (30+30+20), ce qui dépasse les limites légales. Il est alors nécessaire de réduire la puissance d'émission.
 
