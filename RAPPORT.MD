@@ -160,12 +160,13 @@ Cependant, tout fonctionne "normalement" car TCP/IP utilise les **adresses IP** 
 
 - Certains filtres / politiques de sécurité ne s'exécuteraient pas, car on pourrait penser que tout vient du même AP à cause de l'adresse MAC identique
 
-### b) Consultation du format de trame 802.11, explication de comment les 4 adresses devraient être utilisées, si cette fonction n'était pas activée
+### b. Consultation du format de trame 802.11, explication de comment les 4 adresses devraient être utilisées, si cette fonction n'était pas activée
 
 Une trame 802.11 contient jusqu'à **4 champs d'adresse MAC**, dont l'utilisation dépend de deux flags :
 - **To DS** (To Distribution System) : 1 = la trame est destinée au système de distribution (AP)
 - **From DS** (From Distribution System) : 1 = la trame provient du système de distribution (AP)
 
+Format d'une trame 802.11:
 ![Format d'une trame 802.11 venant du support de cours "technologies-wifi](img/format_trame_802_11.jpg)
 -
 
