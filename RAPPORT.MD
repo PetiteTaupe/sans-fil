@@ -176,8 +176,7 @@ Une trame 802.11 contient jusqu'à **4 champs d'adresse MAC**, dont l'utilisatio
 - **To DS** (To Distribution System) : 1 = la trame est destinée au système de distribution (AP)
 - **From DS** (From Distribution System) : 1 = la trame provient du système de distribution (AP)
 
-![alt text](img/format_trame_802_11.jpg)
-*Format d'une trame 802.11 venant du support de cours "technologies-wifi"*
+![Format d'une trame 802.11 venant du support de cours "technologies-wifi](img/format_trame_802_11.jpg)
 
 #### Utilisation des 4 adresses selon To DS / From DS :
 
@@ -223,10 +222,10 @@ Cependant, un problème reste: le wifi reste non chiffré, même si une authenti
 ### 4. faites un schéma couche 3 et couche 2 du pont WiFi dans la variante où les équipements réseau sont administrés dans un VLAN séparé, placez un PC d’administration et indiquez quels ports sont en trunk et quel port est en access
 
 ![Schéma en couche 2](img/schema_couche_2.jpg)
-*Schéma en couche 2*
+
 
 ![Schéma en couche 3](img/schema_couche_3.jpg)
-*Schéma en couche 3.*
+
 
 
 
