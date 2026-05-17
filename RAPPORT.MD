@@ -2,7 +2,7 @@
 ## Introduction
 Dans ce laboratoire, nous nous sommes intéressés à la transmission et au traitement de données dans un contexte IoT à l'aide du réseau LoRaWAN et de la plateforme TTN (The Things Network).
 
-L'objectif était de comprendre le fonctionnement complet d'une chaîne de communication, depuis lenvoi de données par un capteur jusquà leur réception, leur décodage et leur exploitation sur un serveur. Nous avons notamment observé les messages uplink, mis en place un décodeur de payload, puis configuré un webhook HTTP afin de recevoir les données dans un conteneur.
+L'objectif était de comprendre le fonctionnement complet d'une chaîne de communication, depuis l'envoi de données par un capteur jusqu'à leur réception, leur décodage et leur exploitation sur un serveur. Nous avons notamment observé les messages uplink, mis en place un décodeur de payload, puis configuré un webhook HTTP afin de recevoir les données dans un conteneur.
 
 Nous avons ensuite développé un script PHP permettant de traiter, stocker et afficher les données reçues, ainsi que d'identifier des situations anormales. Enfin, nous avons comparé différents formats de transmission (JSON et Protocol Buffers) afin d'évaluer leur impact sur l'exploitation des données.
 
@@ -119,7 +119,7 @@ En revanche, en format Protocol Buffers, les données reçues apparaissent sous 
 
 ![Terninal JSON vs Protocol Buffers](img/9compare.png)
 
-Nous en déduison que le format JSON est plus adapté dans notre cas, car il permet une manipulation simple des données, contrairement au format Protocol Buffers qui nécessite un décodage spécifique. Cependant, ce dernier est plus compact et optimisé pour la transmission, ce qui le rend plus efficace côté machine.
+Nous en déduisons que le format JSON est plus adapté dans notre cas, car il permet une manipulation simple des données, contrairement au format Protocol Buffers qui nécessite un décodage spécifique. Cependant, ce dernier est plus compact et optimisé pour la transmission, ce qui le rend plus efficace côté machine.
 
 ## Conclusion
 Au cours de ce laboratoire, nous avons observé le fonctionnement d'un capteur LoRaWAN via TTN, notamment la réception des messages uplink et leur traitement.
@@ -139,7 +139,7 @@ Non. Un vrai bridge en couche 2 devrait relayer les trames mais conserver l'adre
 
 ##### Que se passe-t-il probablement?
 
-Les access points en mode "bridge" fonctionnent plutôt en mode **relais avec réécritureMAC** (MAC rewriting/source MAC replacement):
+Les access points en mode "bridge" fonctionnent plutôt en mode **relais avec réécriture MAC** (MAC rewriting/source MAC replacement):
 
 1. Du côté LAN1: L'Access point reçoit une trame d'une machine (ex: MAC_A)
 2. En transit: Au lieu de conserver MAC_A, l'AP **remplace l'adresse MAC source par sa propre adresse MAC** (MAC_AP1)
@@ -214,6 +214,8 @@ Cependant, un problème reste: le wifi reste non chiffré, même si une authenti
 
 ### 4. faites un schéma couche 3 et couche 2 du pont WiFi dans la variante où les équipements réseau sont administrés dans un VLAN séparé, placez un PC d’administration et indiquez quels ports sont en trunk et quel port est en access
 
+
+
 ### 5. avec deux antennes à gain 30 dB, quelle distance pourriez-vous atteindre ? quel serait le problème de cette liaison ?
 On pourrait atteindre plusieurs dizaines de kilomètres, mais cela dépend de certains facteurs:
 * Le faisceau à ce niveau de dB est très étroit, il faut être sûr de bien les avoir alignés
@@ -274,12 +276,22 @@ Problème possibles:
 * Le 802.11n peut empirer la situation : il améliore le débit global mais rend le comportement plus variable et peut amplifier les effets des interférences.
 
 ### 8. Améliorer la sécurité d'un réseau de capteurs codés en 802.11 dont le chip wifi ne supporte pas le chiffrement en couche 2
-Soit un réseau de capteurs que vous avez codés, en 802.11. Vous remarquez, trop tard, que
-le chip WiFi embarqué ne supporte pas le chiffrement en couche 2 (ou alors du vieux WEP
-à 64 bits cassable en quelques secondes). Que pouvez-vous faire pour améliorer la sécurité ?
-Pourquoi ce n’est pas idéal dans ce cas ?
+***Soit un réseau de capteurs que vous avez codés, en 802.11. Vous remarquez, trop tard, que le chip WiFi embarqué ne supporte pas le chiffrement en couche 2 (ou alors du vieux WEP à 64 bits cassable en quelques secondes). Que pouvez-vous faire pour améliorer la sécurité ? Pourquoi ce n’est pas idéal dans ce cas ?***
 
-* Chiffrer en couche applicative 
+On pourrait :
+* Utiliser du chiffrement dans la couche application (TLS/HTTPS, MQTTs)
+* Chiffrer directement les données envoyées par les capteurs avant leur transmission
+* Mettre en place une authentification plus forte entre les capteurs et le serveur.
+
+En agissant ainsi, même si le wifi était intercepté, les données resteraient difficiles à lire sans la clé de chiffrement.
+
+Ce n'est pas idéal, car le réseau Wifi reste ouvert dans la couche 2 (liaison). En effet, sans chiffrement en couche 2, toutes les trames wifi sont visibles.
+De plus, les capteurs IOT ont souvent peu de ressources. Le chiffrement applicatif en demande beaucoup.
+
+La gestion des clés devient aussi plus complexe : le stockage, la distribution et le renouvellement de manière sécurisée complique l'architecture.
+
+Il manquera également des protections du Wifi moderne (WPA2/3 fournissent de l'authentification, l'intégrité des trames, et la protection contre certaines attaques réseau). Si on met en place un chiffrement uniquement applicatif, on ne couvre pas entièrement ces aspects.
+ 
 
 ### 9. Listez les mesures à prendre pour sécuriser un réseau Wifi et classez-les de la meilleure à la moins utile.
 1. Chiffrement WPA/WPA2
