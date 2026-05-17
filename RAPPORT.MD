@@ -224,12 +224,11 @@ C'est une page web d'authentification s'affichant automatiquement, imposant des 
 Cependant, un problème reste: le wifi reste non chiffré, même si une authentification est requise. Les trames peuvent être interceptées et un attaquant proche pourrait écouter le trafic.
 
 ### 4. faites un schéma couche 3 et couche 2 du pont WiFi dans la variante où les équipements réseau sont administrés dans un VLAN séparé, placez un PC d’administration et indiquez quels ports sont en trunk et quel port est en access
-
+blabla
 ![Schéma en couche 2](img/schema_couche_2.jpg)
 
-
+blabla
 ![Schéma en couche 3](img/schema_couche_3.jpg)
-
 
 ### 5. avec deux antennes à gain 30 dB, quelle distance pourriez-vous atteindre ? quel serait le problème de cette liaison ?
 On pourrait atteindre plusieurs dizaines de kilomètres, mais cela dépend de certains facteurs:
