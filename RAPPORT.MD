@@ -180,6 +180,7 @@ Une trame 802.11 contient jusqu'à **4 champs d'adresse MAC**, dont l'utilisatio
 - **To DS** (To Distribution System) : 1 = la trame est destinée au système de distribution (AP)
 - **From DS** (From Distribution System) : 1 = la trame provient du système de distribution (AP)
 
+blabla
 ![Format d'une trame 802.11 venant du support de cours "technologies-wifi](img/format_trame_802_11.jpg)
 
 #### Utilisation des 4 adresses selon To DS / From DS :
