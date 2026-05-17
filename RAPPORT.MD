@@ -222,6 +222,12 @@ Cependant, un problème reste: le wifi reste non chiffré, même si une authenti
 
 ### 4. faites un schéma couche 3 et couche 2 du pont WiFi dans la variante où les équipements réseau sont administrés dans un VLAN séparé, placez un PC d’administration et indiquez quels ports sont en trunk et quel port est en access
 
+![Schéma en couche 2](img/schema_couche_2.jpg)
+*Schéma en couche 2*
+
+![Schéma en couche 3](img/schema_couche_3.jpg)
+*Schéma en couche 3.*
+
 
 
 ### 5. avec deux antennes à gain 30 dB, quelle distance pourriez-vous atteindre ? quel serait le problème de cette liaison ?
@@ -314,6 +320,7 @@ Il manquera également des protections du Wifi moderne (WPA2/3 fournissent de l'
 [payload-decode.js](code/payload-decode.js)
 
 [script.php](code/script.php)
+[VLAN ids et configurations trunk](https://jumpcloud.com/it-index/what-is-vlan-id)
 
 ## Sources
 [802.11n et 802.11e definitions](https://wlanprofessionals.com/the-abcs-of-802-11/)
