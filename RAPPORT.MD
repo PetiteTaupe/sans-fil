@@ -15,6 +15,7 @@ Après l'authentification sur le site TTN, nous sommes arrivés sur le dashboard
 ![Première donnée transmise](img/2.png)
 
 Nous observons les étapes de traitement de l'uplink:
+
 1. Forward uplink: réception du message
 2. Decode uplink: tentative de décodage (échoue, pas de décodeur)
 3. Schedule downlink: éventuelle réponse planifiée
@@ -160,14 +161,17 @@ Cependant, tout fonctionne "normalement" car TCP/IP utilise les **adresses IP** 
 ##### Risques éventuels?
 
 **Perte d'information d'adressage**
+
 - Il est impossible d'identifier la véritable machine source du LAN1 à partir du LAN2.
 - Les adresses MAC originales sont perdues.
 
 **Problèmes avec ARP**
+
 - Les tables ARP ne reflètent pas la topologie réelle
 - Une machine du LAN2 qui veut faire un ping à une machine du LAN1 doit passer par l'AP, pas directement. Il y a donc un risque d'incohérence ARP si les réponses ARP ne sont pas cohérentes avec le flux de données
 
 **Problèmes de sécurité**
+
 - Certains filtres / politiques de sécurité ne s'exécuteraient pas, car on pourrait penser que tout vient du même AP à cause de l'adresse MAC identique
 
 ### b) Consultation du format de trame 802.11, explication de comment les 4 adresses devraient être utilisées, si cette fonction n'était pas activée
@@ -229,70 +233,79 @@ Cependant, un problème reste: le wifi reste non chiffré, même si une authenti
 
 ### 5. avec deux antennes à gain 30 dB, quelle distance pourriez-vous atteindre ? quel serait le problème de cette liaison ?
 On pourrait atteindre plusieurs dizaines de kilomètres, mais cela dépend de certains facteurs:
-* Le faisceau à ce niveau de dB est très étroit, il faut être sûr de bien les avoir alignés
-* Avoir une ligne de vue dégagée (zone de Fresnel).
+
+- Le faisceau à ce niveau de dB est très étroit, il faut être sûr de bien les avoir alignés
+- Avoir une ligne de vue dégagée (zone de Fresnel).
 
 Problème possible: la puissance isotrope rayonnée équivalente (EIRP) est souvent réglementée selon les pays. 
 
 $$EIRP=Pemission + Gantenne$$
 
 Si on suppose :
-* Wi-Fi 5 GHz,
-* puissance émission = 20 dBm,
-* antennes = 30 dBi chacune,
-* sensibilité réception = env. -75 dBm.
+
+- Wi-Fi 5 GHz,
+- puissance émission = 20 dBm,
+- antennes = 30 dBi chacune,
+- sensibilité réception = env. -75 dBm.
 
 Si on a 30 dB de gains, on arrive à 80 (30+30+20), ce qui dépasse les limites légales. Il est alors nécessaire de réduire la puissance d'émission.
 
 #### Problème de la liaison : 
-* Risques d'interférence (perturbations radio, meteo, arbres)
-* Limites légales.
+
+- Risques d'interférence (perturbations radio, meteo, arbres)
+- Limites légales.
 
 ### 6. donnez des arguments pour l’exploitation en mode bridge et en mode routeur au sein de l’entreprise (les réseaux filaires et sans-fils sont respectivement switchés et routés)
 ### Bridge
 En mode Bridge, les utilisateurs sans fil et filaire sont dans le même réseau de couche 2.
 
 Avantages: 
-* Partage facile, par exemple avec une imprimante
-* Même plan d'adressage IP
-* Broadcast
+
+- Partage facile, par exemple avec une imprimante
+- Même plan d'adressage IP
+- Broadcast
 
 Désavantages: 
-* Sécurité plus faible entre wifi et filaire
-* Grand domaine de broadcast
-* Propagation possible (tempête broadcast, attaques ARP)
+
+- Sécurité plus faible entre wifi et filaire
+- Grand domaine de broadcast
+- Propagation possible (tempête broadcast, attaques ARP)
 
 #### Mode routeur
 En mode routeur, le wifi est séparé du réseau filaire. Les deux sous-réseaux sont alors bien distincts (sans fil, réseau filaire routé)
 
 Avantages:
-* Meilleure sécurité
-* Isolation des clients Wi-fi
-* Filtrage avec firewall possible
-* Politiques réseaux différentes selon les utilisateurs (employés, invités, admin)
+
+- Meilleure sécurité
+- Isolation des clients Wi-fi
+- Filtrage avec firewall possible
+- Politiques réseaux différentes selon les utilisateurs (employés, invités, admin)
 
 Désavantages:
-* Configuration plus complexe
-* Il faut gérer le DHCP, le routage, le firewall et le VLAN.
+
+- Configuration plus complexe
+- Il faut gérer le DHCP, le routage, le firewall et le VLAN.
 
 ### 7. Problème: des trames se perdent 
 
-* 802.11e garantit la **QoS** pour des données telles que la voix durant les appels par exemple.
-* 802.11n garantit le **débit haut**.
+- 802.11e garantit la **QoS** pour des données telles que la voix durant les appels par exemple.
+- 802.11n garantit le **débit haut**.
 
 Problème possibles: 
-* Le QoS est priorisé et les paquets à priorité basse peuvent être mis en attente si un trafic prioritaire passe avant eux.
-* Le wifi est un réseau à accès concurrent. Il est possible que plusieurs stations se disputent le canal.
-* Il y a eu des retransmissions: Si une trame doit être retransmise, le délai devient imprévisible et les paquets arrivent de manière irrégulière. Il y a alors moins de coupures mais une forte latence est possible.
-* Le 802.11n peut empirer la situation : il améliore le débit global mais rend le comportement plus variable et peut amplifier les effets des interférences.
+
+- Le QoS est priorisé et les paquets à priorité basse peuvent être mis en attente si un trafic prioritaire passe avant eux.
+- Le wifi est un réseau à accès concurrent. Il est possible que plusieurs stations se disputent le canal.
+- Il y a eu des retransmissions: Si une trame doit être retransmise, le délai devient imprévisible et les paquets arrivent de manière irrégulière. Il y a alors moins de coupures mais une forte latence est possible.
+- Le 802.11n peut empirer la situation : il améliore le débit global mais rend le comportement plus variable et peut amplifier les effets des interférences.
 
 ### 8. Améliorer la sécurité d'un réseau de capteurs codés en 802.11 dont le chip wifi ne supporte pas le chiffrement en couche 2
 ***Soit un réseau de capteurs que vous avez codés, en 802.11. Vous remarquez, trop tard, que le chip WiFi embarqué ne supporte pas le chiffrement en couche 2 (ou alors du vieux WEP à 64 bits cassable en quelques secondes). Que pouvez-vous faire pour améliorer la sécurité ? Pourquoi ce n’est pas idéal dans ce cas ?***
 
 On pourrait :
-* Utiliser du chiffrement dans la couche application (TLS/HTTPS, MQTTs)
-* Chiffrer directement les données envoyées par les capteurs avant leur transmission
-* Mettre en place une authentification plus forte entre les capteurs et le serveur.
+
+- Utiliser du chiffrement dans la couche application (TLS/HTTPS, MQTTs)
+- Chiffrer directement les données envoyées par les capteurs avant leur transmission
+- Mettre en place une authentification plus forte entre les capteurs et le serveur.
 
 En agissant ainsi, même si le wifi était intercepté, les données resteraient difficiles à lire sans la clé de chiffrement.
 
@@ -305,6 +318,7 @@ Il manquera également des protections du Wifi moderne (WPA2/3 fournissent de l'
  
 
 ### 9. Listez les mesures à prendre pour sécuriser un réseau Wifi et classez-les de la meilleure à la moins utile.
+
 1. Chiffrement WPA/WPA2
 2. Utiliser un mot de passe de connexion fort
 3. Faire les mises à jour
@@ -322,8 +336,8 @@ Il manquera également des protections du Wifi moderne (WPA2/3 fournissent de l'
 
 ## Utilisation de l'IA
 
-* Code: idées, aide à la correction
-* Formules: copié-coller des formules de base, aide à la correction des résultats
+- Code: idées, aide à la correction
+- Formules: copié-coller des formules de base, aide à la correction des résultats
 
 ## Sources
 [802.11n et 802.11e definitions](https://wlanprofessionals.com/the-abcs-of-802-11/)
