@@ -132,4 +132,5 @@ Enfin, nous avons comparé les formats JSON et Protocol Buffers pour la transmis
 
 ## Annexes
 [Payload formatter](code/payload-decode.js)
+
 [script.php](code/script.php)
