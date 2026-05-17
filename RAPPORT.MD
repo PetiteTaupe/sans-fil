@@ -198,7 +198,7 @@ Ce n'est pas le cas avec la configuration utilisée ici: les APs simples en mode
 L'entropie d'un mot passe choisi parmi 94 caractères ASCII imprimables,
 choisis aléatoirement et sur une longueur de 40 caractères, vaut: 
 
-$$H = 40 * log(94) \approx  262 bits$$
+$$H = 40 * log(94) \approx 262 bits$$
 
 Un exemple de secret partagé robuste serait de générer 40 caractères aléatoires parmi un alphabet qui serait plutôt large.
 Voici un exemple:
@@ -236,7 +236,7 @@ On pourrait atteindre plusieurs dizaines de kilomètres, mais cela dépend de ce
 
 Problème possible: la puissance isotrope rayonnée équivalente (EIRP) est souvent réglementée selon les pays. 
 
-$$EIRP=Pemission ​+ Gantenne​$$
+$$EIRP=Pemission + Gantenne$$
 
 Si on suppose :
 * Wi-Fi 5 GHz,
