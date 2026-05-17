@@ -24,7 +24,9 @@ En cliquant sur une de ces étapes, cela ouvre le détail de cette dernière au 
 
 ![Gateway dans le détail de l'étape](img/2gateway.png)
 
-Dans notre cas, nous pouvons lire que notre message passe par un gateway de la HE-Arc.
+Dans notre cas, le message uplink est transmis du capteur vers le serveur applicatif via le gateway HE-ARC.
+
+L'identification du gateway montre le rôle de ces équipements comme interfaces entre le réseau LoRa (couche physique) et Internet (couche IP).
 
 ### Test de simulation des données
 
@@ -49,6 +51,8 @@ Lien vers le code complet: [code/payload-decode.js](code/payload-decode.js)
 Avec le décodeur complété nous pouvons maintenant voir en plus les informations du capteur (humidité et température):
 
 ![Résultats du décodeur complété](img/4complete.png)
+
+Le payload reçu est initialement encodé sous forme binaire, ce qui correspond à une syntaxe de transfert optimale pour la transmission. Le décodeur JS nous permet d'avoir une syntaxe exploitable (JSON).
 
 ### Accès au conteneur ALPHANET-DS
 Après la connexion à la machine distante via SSH, nous avons mis à jour le système du conteneur, installé netcat et ouvert un serveur TCP sur le port 80 grâce à la commande `nc`.
@@ -85,6 +89,8 @@ Maintenant, les données deviennent interprétables et peuvent être lues au for
 
 ![Test webhook with payload formatter](img/6withpayloadformatter.png)
 
+L'utilisation du webhook nous montre l'architecture client-serveur évenementielle, où TTN agit comme un serveur client envoyant des requêtes POST vers notre serveur.
+
 ### Affichage des données
 
 Après la mise en place du webhook et du déploiement du script PHP sur le conteneur, nous avons mis en place l'affichage des données reçues.
@@ -105,6 +111,8 @@ Le script PHP récupère les données capteurs (température, humidité et tensi
 ![Gestion des alertes](img/8.png)
 
 Les alertes générées sont ensuite affichées dynamiquement sur la page web sous forme de liste. Cela permet une lecture rapide de l'état du système sans analyser directement les valeurs numériques.
+
+Le script PHP implémente la couche applicative de notre système IoT, responsable du traitement, stockage et visualisation des données.
 
 ### Webhook JSON vs Protocol Buffers
 Afin d'obtenir des logs exploitables, nous sommes revenus au script PHP de base et avons désactivé le payload formatter.
@@ -303,7 +311,8 @@ Il manquera également des protections du Wifi moderne (WPA2/3 fournissent de l'
 
 
 ## Annexes
-[Payload formatter](code/payload-decode.js)
+[payload-decode.js](code/payload-decode.js)
+
 [script.php](code/script.php)
 
 ## Sources
