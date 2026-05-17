@@ -167,6 +167,8 @@ Une trame 802.11 contient jusqu'à **4 champs d'adresse MAC**, dont l'utilisatio
 - **From DS** (From Distribution System) : 1 = la trame provient du système de distribution (AP)
 
 ![Format d'une trame 802.11 venant du support de cours "technologies-wifi](img/format_trame_802_11.jpg)
+-
+
 #### Utilisation des 4 adresses selon To DS / From DS :
 
 | To DS | From DS | Addr1 | Addr2 | Addr3 | Addr4 | Contexte |
@@ -212,6 +214,8 @@ Cependant, un problème reste: le wifi reste non chiffré, même si une authenti
 
 ![Schéma en couche 2](img/schema_couche_2.jpg)
 ![Schéma en couche 3](img/schema_couche_3.jpg)
+-
+
 ### 5. avec deux antennes à gain 30 dB, quelle distance pourriez-vous atteindre ? quel serait le problème de cette liaison ?
 On pourrait atteindre plusieurs dizaines de kilomètres, mais cela dépend de certains facteurs:
 
