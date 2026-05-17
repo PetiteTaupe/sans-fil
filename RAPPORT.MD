@@ -227,8 +227,6 @@ Cependant, un problème reste: le wifi reste non chiffré, même si une authenti
 ![Schéma en couche 3](img/schema_couche_3.jpg)
 
 
-
-
 ### 5. avec deux antennes à gain 30 dB, quelle distance pourriez-vous atteindre ? quel serait le problème de cette liaison ?
 On pourrait atteindre plusieurs dizaines de kilomètres, mais cela dépend de certains facteurs:
 * Le faisceau à ce niveau de dB est très étroit, il faut être sûr de bien les avoir alignés
@@ -314,12 +312,17 @@ Il manquera également des protections du Wifi moderne (WPA2/3 fournissent de l'
 5. Désactiver WPS (pratique mais vulnérable) 
 6. Portail captif
 
-
 ## Annexes
 [payload-decode.js](code/payload-decode.js)
 
 [script.php](code/script.php)
 [VLAN ids et configurations trunk](https://jumpcloud.com/it-index/what-is-vlan-id)
+
+
+## Utilisation de l'IA
+
+* Code: idées, aide à la correction
+* Formules: copié-coller des formules de base, aide à la correction des résultats
 
 ## Sources
 [802.11n et 802.11e definitions](https://wlanprofessionals.com/the-abcs-of-802-11/)
